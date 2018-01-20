@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 
 """
 find duplicate files based on size, and md5sum, inode
@@ -13,8 +13,11 @@ Author: Amro Diab
 Date: 10/05/2016
 
 """
-
-import __builtin__
+from __future__ import print_function
+try:
+    import __builtin__
+except ModuleNotFoundError:
+    import builtins as __builtin__
 import itertools
 import json
 import os
@@ -49,26 +52,25 @@ def print_report(final_dict, pretty):
             for key, value in final_dict[md5]['entries'].items():
                 filenames.append((key, value))
             sys.stdout.write("md5:{}\n".format(md5))
-            print "entries:"
+            print("entries:")
             for file_entry in filenames:
                 sys.stdout.write("name: {0}, inode: {1}\n"
                                  .format(file_entry[0], file_entry[1]))
-            print
-            print "single size: ", size
-            print "number of files: ", count
-            print "saving for cluster ", total_size
-            print "\n"
+            print()
+            print("single size: ", size)
+            print("number of files: ", count)
+            print("saving for cluster ", total_size)
+            print("\n")
             total_system += total_size
-            print "-"*20
+            print("-" * 20)
         else:
             del final_dict[md5]
     if pretty:
-        print json.dumps(final_dict, indent=4, sort_keys=True)
+        print(json.dumps(final_dict, indent=4, sort_keys=True))
     else:
-        #print json.dumps(final_dict)
-        print
+        print()
 
-    print "\n\n\nTotal potential saving entire subtree: {}".format(human_bytes(total_system))
+    print("\n\n\nTotal potential saving entire subtree: {}".format(human_bytes(total_system)))
 
 
 

@@ -80,8 +80,8 @@ class Md5Structure(BaseStructure):
             self.my_dict[checksum]['entries'].update({path: inode})
             self.my_dict[checksum]['size'] = size
         except ValueError as ex:   #remove?!?
-            print 'yyy', self.my_dict[checksum]
-            print "xxx ", type(path), type(inode), ex
+            print_debug('yyy', self.my_dict[checksum])
+            print_debug("xxx ", type(path), type(inode), ex)
 
 class FileStructure(dict):
     """
@@ -98,12 +98,12 @@ class FileStructure(dict):
     def __getitem__(self, item):
         """ Fetch single attribute from object """
         # FIXME
-        print "getting item {}".format(item)
+        print("getting item {}".format(item))
 
         try:
             return self.my_dict
         except KeyError:
-            print "poo"
+            prin( "No such key", key)
 
     def __str__(self):
         """ how to print structure """
