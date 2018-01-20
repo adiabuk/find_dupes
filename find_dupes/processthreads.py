@@ -7,6 +7,7 @@ adding to a Queue
 
 import hashlib
 import os
+import sys
 import threading
 import time
 
@@ -51,8 +52,12 @@ class Md5Thread(threading.Thread):
 
                 for size, value in data.items():
                     for file_name, inode in value.items():
-                        checksum = self.md5(file_name)
-                        my_dict.put(file_name, size, inode, checksum)
+                        try:
+                            checksum = self.md5(file_name)
+                            my_dict.put(file_name, size, inode, checksum)
+                        except IOError:
+                            sys.stderr.write("File vanished: " + file_name + "\n")
+                            continue
             else:
                 queue_lock.release()
                 exitFlag = True
