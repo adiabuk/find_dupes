@@ -11,8 +11,8 @@ import sys
 import threading
 import time
 
-import filestructure
-from debug import print_debug
+from . import filestructure
+from .debug_logger import print_debug
 
 
 class Md5Thread(threading.Thread):
@@ -77,7 +77,6 @@ class Md5Thread(threading.Thread):
             for chunk in iter(lambda: file_handle.read(16384), b""):
                 hash_md5.update(chunk)
         return hash_md5.hexdigest()
-
 
 class FileThread(threading.Thread):
     """

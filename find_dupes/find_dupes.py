@@ -27,10 +27,10 @@ import time
 
 from optparse import OptionParser
 
-from debug import print_debug
-from filestructure import FileStructure, Md5Structure, WorkQueue
-from processthreads import FileThread, Md5Thread
-from progress import ProgressBar
+from .debug_logger import print_debug
+from .filestructure import FileStructure, Md5Structure, WorkQueue
+from .processthreads import FileThread, Md5Thread
+from .progress import ProgressBar
 
 CURRENT_DIR = os.getcwd()
 __builtin__.exitFlag = 0
@@ -175,7 +175,11 @@ def spinner_func(options, work_queue, queue_lock):
 
     try:
         while spin_thread.is_alive():
-            sys.stdout.write(spinner.next())  # write the next character
+            try:
+                sys.stdout.write(spinner.next())  # write the next character
+            except AttributeError:
+                sys.stdout.write(next(spinner))  # python3
+
             sys.stdout.flush()                # flush stdout buffer (actual character display)
             sys.stdout.write('\b')            # erase the last written char
             time.sleep(0.1)

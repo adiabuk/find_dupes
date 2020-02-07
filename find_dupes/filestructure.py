@@ -4,14 +4,16 @@ Filestrcutre class and suporting functions for storing, sorting, extracting,
 and manipulating file file attributes and other metadata
 
 """
-
-import Queue
+try:
+    import Queue
+except ModuleNotFoundError:
+    import queue as Queue
 import json
 import threading
 
 
 from collections import defaultdict
-from debug import print_debug
+from .debug_logger import print_debug
 
 
 class Singleton(type):
@@ -49,9 +51,7 @@ class BaseStructure(dict):
         """ get entire object """
         return self.my_dict
 
-
 class Md5Structure(BaseStructure):
-
     __metaclass__ = Singleton
 
     def put(self, path, size, inode, checksum):
