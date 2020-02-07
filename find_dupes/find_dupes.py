@@ -16,7 +16,7 @@ Date: 10/05/2016
 from __future__ import print_function
 try:
     import __builtin__
-except ModuleNotFoundError:
+except ImportError:
     import builtins as __builtin__
 import itertools
 import json
